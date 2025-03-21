@@ -3,7 +3,7 @@
 ### Backend setup
 1. open a new terminal and clone the repository:
     ```bash
-    ctrl + `
+    ctrl + shift + `
     git clone https://github.com/Edgar-Sumabat-Jr/newproject.git
     cd newproject
     ```
