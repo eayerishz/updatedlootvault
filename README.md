@@ -3,7 +3,7 @@
 ### Backend setup
 1. open a new terminal and clone the repository:
     ```bash
-    ctrl + shift + `
+    ctrl + `
     git clone https://github.com/Edgar-Sumabat-Jr/newproject.git
     cd newproject
     ```
@@ -27,7 +27,7 @@
 ### Frontend setup
 1. open new terminal and go to frontend folder
    ```bash
-   ctrl + `
+   ctrl + shift + `
    cd frontend
    ```
 
