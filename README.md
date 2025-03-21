@@ -28,7 +28,7 @@
 1. open new terminal and go to frontend folder
    ```bash
    ctrl + shift + `
-   cd frontend
+   cd newproject/frontend
    ```
 
 2. install dependencies
