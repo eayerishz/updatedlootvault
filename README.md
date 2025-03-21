@@ -1,8 +1,9 @@
 ## How to use:
 
 ### Backend setup
-1. Clone the repository:
+1. open a new terminal and clone the repository:
     ```bash
+    ctrl + `
     git clone https://github.com/Edgar-Sumabat-Jr/newproject.git
     cd newproject
     ```
