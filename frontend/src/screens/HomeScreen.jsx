@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 
 function HomeScreen() {
   const [games, setGames] = useState([]);
@@ -22,8 +22,8 @@ function HomeScreen() {
     fetchGames();
   }, []);
 
-  console.log('Games state:', games); // Debugging: Check the state of games when rendered
-  console.log('Error state:', error); // Debugging: Check the error state
+  console.log('Games state:', games);
+  console.log('Error state:', error);
 
   return (
     <div
@@ -38,7 +38,6 @@ function HomeScreen() {
       }}
     >
       <Container>
-        {/* Popular Games Header Container */}
         <div
           style={{
             textAlign: 'center',
@@ -61,61 +60,54 @@ function HomeScreen() {
           </h1>
         </div>
 
-        {/* Error Message */}
         {error && <div style={{ color: 'red', textAlign: 'center' }}>{error}</div>}
 
-        {/* Row for Games */}
         <Row>
-          {games.map(game => {
-            console.log('Rendering game:', game); // Debugging: Check the individual game object
-            return (
-              <Col key={game._id} sm={12} md={6} lg={4} xl={3} style={{ paddingBottom: '20px' }}>
+          {games.map(game => (
+            <Col key={game._id} sm={12} md={6} lg={4} xl={3} style={{ paddingBottom: '20px' }}>
+              <div
+                style={{
+                  backgroundColor: '#222',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  boxShadow: '0 10px 20px rgba(0, 0, 0, 0.3)',
+                  position: 'relative',
+                  padding: '10px',
+                }}
+              >
+                <Link to="/order-screen" state={{ selectedGame: game }}>
+                  <img
+                    src={`http://localhost:3000/${game.image_url}`}
+                    alt={game.name}
+                    style={{
+                      width: '100%',
+                      height: '250px',
+                      objectFit: 'cover',
+                      borderRadius: '10px',
+                      transition: 'transform 0.3s ease',
+                    }}
+                  />
+                </Link>
                 <div
                   style={{
-                    backgroundColor: '#222',
-                    borderRadius: '15px',
-                    overflow: 'hidden',
-                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.3)',
-                    position: 'relative',
+                    position: 'absolute',
+                    bottom: '0',
+                    left: '0',
+                    right: '0',
+                    background: 'rgba(0, 0, 0, 0.7)',
+                    color: '#fff',
                     padding: '10px',
+                    textAlign: 'center',
+                    fontSize: '1.2rem',
+                    fontFamily: 'Orbitron, sans-serif',
+                    textShadow: '0 0 5px rgba(0, 0, 0, 0.7)',
                   }}
                 >
-                  {/* Wrap the image in a Link */}
-                  <Link to="/order-screen">
-                    <img
-                      src={`http://localhost:3000/${game.image_url}`}  // Image URL from your backend
-                      alt={game.name}
-                      style={{
-                        width: '100%',
-                        height: '250px',
-                        objectFit: 'cover',
-                        borderRadius: '10px',
-                        transition: 'transform 0.3s ease',
-                      }}
-                    />
-                  </Link>
-                  {/* Game Name Container */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      right: '0',
-                      background: 'rgba(0, 0, 0, 0.7)',
-                      color: '#fff',
-                      padding: '10px',
-                      textAlign: 'center',
-                      fontSize: '1.2rem',
-                      fontFamily: 'Orbitron, sans-serif',
-                      textShadow: '0 0 5px rgba(0, 0, 0, 0.7)',
-                    }}
-                  >
-                    {game.name} {/* Display game name */}
-                  </div>
+                  {game.name}
                 </div>
-              </Col>
-            );
-          })}
+              </div>
+            </Col>
+          ))}
         </Row>
       </Container>
     </div>

@@ -7,6 +7,7 @@ from .views import get_users  # Import the get_users view
 from .views import get_game_details  # Import your new view
 
 urlpatterns = [
+    # Existing endpoints
     path('api/games/', views.getGames, name="get-games"),
     path('api/game/<str:pk>/', views.getGame, name="get-game"),
     path('api/dashboard-stats/', views.getDashboardStats, name="dashboard-stats"),
@@ -15,5 +16,8 @@ urlpatterns = [
     path('api/create-order/', createOrder, name='create-order'),  # Add this line for order creation
     path('api/users/', get_users, name='get_users'),  # Add this line
     path('api/game-details/', get_game_details, name='get_game_details'),  # Add this line
-    
+
+    # New endpoints for ratings
+    path('api/purchased-games/', views.get_purchased_games, name='get_purchased_games'),  # Fetch purchased games
+    path('api/submit-rating/', views.submit_rating, name='submit_rating'),  # Submit a rating
 ]

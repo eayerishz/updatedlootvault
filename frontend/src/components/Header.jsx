@@ -1,7 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; // Use Link for routing
 
-function Header() {
+function Header({ isSuperuser }) {
     return (
         <Navbar 
             expand="lg" 
@@ -15,7 +16,8 @@ function Header() {
             <Container>
                 {/* Logo */}
                 <Navbar.Brand 
-                    href="/" 
+                    as={Link} // Use Link for routing
+                    to="/" 
                     style={{ 
                         fontWeight: 'bold', 
                         fontSize: '1.8rem', 
@@ -64,7 +66,8 @@ function Header() {
                     {/* Navigation Links */}
                     <Nav className="ms-auto">
                         <Nav.Link 
-                            href="/" 
+                            as={Link} // Use Link for routing
+                            to="/" 
                             style={{
                                 color: '#FFFFFF',
                                 fontWeight: '500',
@@ -81,7 +84,8 @@ function Header() {
                             Home
                         </Nav.Link>
                         <Nav.Link 
-                            href="/about" 
+                            as={Link} // Use Link for routing
+                            to="/about-us" // Updated to /about-us
                             style={{
                                 color: '#FFFFFF',
                                 fontWeight: '500',
@@ -97,10 +101,9 @@ function Header() {
                             <i className="fa fa-info-circle" aria-hidden="true" style={{ marginRight: '5px' }}></i>
                             About
                         </Nav.Link>
-
-                        {/* Profile Link */}
                         <Nav.Link 
-                            href="/profile"
+                            as={Link} // Use Link for routing
+                            to="/profile"
                             style={{
                                 color: '#FFFFFF',
                                 fontWeight: '500',
@@ -116,6 +119,44 @@ function Header() {
                             <i className="fa-sharp-duotone fa-solid fa-circle-user" style={{ marginRight: '5px' }}></i>
                             Profile
                         </Nav.Link>
+                        <Nav.Link 
+                            as={Link} // Use Link for routing
+                            to="/rate-games"
+                            style={{
+                                color: '#FFFFFF',
+                                fontWeight: '500',
+                                marginRight: '15px',
+                                transition: 'color 0.3s ease',
+                                textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                            onMouseEnter={(e) => (e.target.style.color = '#FFD700')}
+                            onMouseLeave={(e) => (e.target.style.color = '#FFFFFF')}
+                        >
+                            <i className="fa-solid fa-star" style={{ marginRight: '5px' }}></i>
+                            Rate LootVault
+                        </Nav.Link>
+                        {isSuperuser && (
+                            <Nav.Link 
+                                as={Link} // Use Link for routing
+                                to="/admin"
+                                style={{
+                                    color: '#FFFFFF',
+                                    fontWeight: '500',
+                                    marginRight: '15px',
+                                    transition: 'color 0.3s ease',
+                                    textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                                onMouseEnter={(e) => (e.target.style.color = '#FFD700')}
+                                onMouseLeave={(e) => (e.target.style.color = '#FFFFFF')}
+                            >
+                                <i className="fa-solid fa-lock" style={{ marginRight: '5px' }}></i>
+                                Admin Dashboard
+                            </Nav.Link>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

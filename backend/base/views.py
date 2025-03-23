@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.db.models import Count, Sum
-from base.models import Game, Order, OrderItem
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django.contrib.auth.models import User  # Import User if needed
-from django.contrib.auth.decorators import login_required  # Import for login_required
-from rest_framework import status
 from django.db.models import Count, Sum, F
+from base.models import Game, Order, OrderItem, UserRating
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
+import logging
+
+logger = logging.getLogger(__name__)
 
 # The endpoint to fetch all games (products)
 @api_view(['GET'])
@@ -20,6 +22,8 @@ def getGames(request):
             "price": str(game.price),  # Convert Decimal to string for easy display
             "category": game.category,
             "image_url": game.image_url,  # Include image URL if needed
+            "rating": game.rating,  # Include average rating
+            "numReviews": game.numReviews,  # Include number of reviews
         }
         for game in games
     ]
@@ -37,6 +41,8 @@ def getGame(request, pk):
             "category": game.category,
             "description": game.description,
             "image_url": game.image_url,  # Include image URL if needed
+            "rating": game.rating,  # Include average rating
+            "numReviews": game.numReviews,  # Include number of reviews
         }
         return Response(game_data)
     except Game.DoesNotExist:
@@ -65,7 +71,6 @@ def getDashboardStats(request):
         'total_revenue': total_revenue,
     })
 
-
 @api_view(['GET'])
 def getOrderDetails(request):
     # Fetch all orders with their items (optimized with prefetch_related)
@@ -86,13 +91,11 @@ def getOrderDetails(request):
     
     return Response(order_details)
 
-
 def is_superuser(request):
     if request.user.is_authenticated:
         return JsonResponse({'is_superuser': request.user.is_superuser})
     else:
         return JsonResponse({'is_superuser': False})  # Return false if not authenticated
-
 
 @api_view(['POST'])
 def createOrder(request):
@@ -144,3 +147,61 @@ def get_game_details(request):
     ).values('_id', 'name', 'total_sold', 'total_sales_amount')  # Use _id instead of id
 
     return Response(games)
+
+# Fetch purchased games for the authenticated user
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_purchased_games(request):
+    # Fetch games the user has purchased
+    purchased_games = Game.objects.filter(order__user=request.user).distinct()
+    games_data = [
+        {
+            "id": game._id,
+            "name": game.name,
+            "price": str(game.price),
+            "category": game.category,
+            "image_url": game.image_url,
+            "rating": game.rating,
+            "numReviews": game.numReviews,
+        }
+        for game in purchased_games
+    ]
+    return Response(games_data)
+
+# Submit a rating for a purchased game
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def submit_rating(request):
+    game_id = request.data.get('game_id')
+    rating = request.data.get('rating')
+
+    logger.info(f"Received rating submission: game_id={game_id}, rating={rating}")  # Log the received data
+
+    if not game_id or not rating:
+        logger.error("Missing game_id or rating in request")  # Log missing data
+        return Response({'error': 'game_id and rating are required'}, status=400)
+
+    try:
+        game = Game.objects.get(_id=game_id)
+        logger.info(f"Game found: {game.name}")  # Log the found game
+    except Game.DoesNotExist:
+        logger.error(f"Game with ID {game_id} not found")  # Log game not found
+        return Response({'error': 'Game not found'}, status=404)
+
+    # Check if the user has purchased the game
+    if not OrderItem.objects.filter(order__user=request.user, game=game).exists():
+        logger.error(f"User {request.user.username} has not purchased game {game.name}")  # Log purchase check failure
+        return Response({'error': 'You have not purchased this game'}, status=403)
+
+    # Create or update the rating
+    user_rating, created = UserRating.objects.get_or_create(
+        user=request.user,
+        game=game,
+        defaults={'rating': rating}
+    )
+    if not created:
+        user_rating.rating = rating
+        user_rating.save()
+
+    logger.info(f"Rating submitted successfully for game {game.name} by user {request.user.username}")  # Log success
+    return Response({'message': 'Rating submitted successfully'})

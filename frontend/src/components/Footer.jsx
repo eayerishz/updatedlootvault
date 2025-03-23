@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Footer() {
   return (
@@ -30,8 +31,8 @@ function Footer() {
         {/* Footer Links */}
         <Row>
           <Col className='text-center'>
-            <a
-              href="/contact"
+            <Link
+              to="/contact-us" // Update the path to match your route
               style={{
                 color: '#ffffff',
                 margin: '0 10px',
@@ -46,9 +47,9 @@ function Footer() {
             >
               <i className="fa-sharp-duotone fa-solid fa-phone" style={{ marginRight: '5px' }}></i>
               Contact Us
-            </a>
-            <a
-              href="/privacy-policy"
+            </Link>
+            <Link
+              to="/privacy-policy" // Update the path to match your route
               style={{
                 color: '#ffffff',
                 margin: '0 10px',
@@ -63,9 +64,9 @@ function Footer() {
             >
               <i className="fa-solid fa-user-lock" style={{ marginRight: '5px' }}></i>
               Privacy Policy
-            </a>
-            <a
-              href="/terms-and-conditions"
+            </Link>
+            <Link
+              to="/terms-and-conditions" // Update the path to match your route
               style={{
                 color: '#ffffff',
                 margin: '0 10px',
@@ -80,7 +81,7 @@ function Footer() {
             >
               <i className="fa-solid fa-file-signature" style={{ marginRight: '5px' }}></i>
               Terms & Conditions
-            </a>
+            </Link>
           </Col>
         </Row>
       </Container>
