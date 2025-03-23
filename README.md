@@ -40,6 +40,26 @@
    ```bash
    npm start
    ```
+    
+###
+#Updated#
+App.js
+HomeScreen.js
+OrderScreen.js
+views.py
+models.py
+urls.py
+Header.jsx
+Footer.jsx
+Games.js
+Orderscreen.jsx
+package.json
+manage.py
 
-
+#Added#
+RateGames.js
+ContactUs.js
+AboutUs.js
+PrivacyPolicy.js
+TermsAndConditions.js
 
