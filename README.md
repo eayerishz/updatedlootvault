@@ -41,8 +41,7 @@
    npm start
    ```
     
-
-#Updated#
+Updated(NOM)
 
    ```bash
 App.js,
@@ -59,7 +58,7 @@ package.json,
 manage.py,
    ```
 
-#Added#
+Added(NOM)
 
    ```bash
 RateGames.js,
