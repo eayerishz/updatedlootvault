@@ -23,7 +23,7 @@ function Footer() {
                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)',
               }}
             >
-              Copyright &copy; Codashopee 2024
+              Copyright &copy; LootVault 2025
             </span>
           </Col>
         </Row>
