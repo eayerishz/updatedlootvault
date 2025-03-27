@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 import logging
 
+from .models import Game  # Ensure the Game model is imported
 logger = logging.getLogger(__name__)
 
 # The endpoint to fetch all games (products)
@@ -205,3 +206,17 @@ def submit_rating(request):
 
     logger.info(f"Rating submitted successfully for game {game.name} by user {request.user.username}")  # Log success
     return Response({'message': 'Rating submitted successfully'})
+
+def search_games(request):
+    name = request.GET.get('name', '').strip()
+    if name:
+        games = Game.objects.filter(name__icontains=name)  # Use icontains for case-insensitive partial matching
+        results = [{
+            '_id': game._id,
+            'name': game.name,
+            'price': str(game.price),
+            'category': game.category,
+            'image_url': game.image_url
+        } for game in games]
+        return JsonResponse(results, safe=False)
+    return JsonResponse([])  # Return empty list if no search term
