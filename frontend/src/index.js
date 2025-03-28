@@ -2,27 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { Provider } from 'react-redux';
-import store from './store';
 import reportWebVitals from './reportWebVitals';
 import './bootstrap.min.css';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-
-// PayPal options with the client-id
-const paypalOptions = {
-  "client-id": "your-client-id-here",  // Make sure to replace this with your actual PayPal client ID
-  currency: "USD",  // You can change this to your preferred currency
-};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <PayPalScriptProvider options={paypalOptions}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </PayPalScriptProvider>
-  </Provider>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
