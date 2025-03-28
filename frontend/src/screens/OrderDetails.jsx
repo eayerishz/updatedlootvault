@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/OrderDetails.css'; // Adjust the path to point to the styles directory
+import '../styles/OrderDetails.css'; // Ensure this path is correct for your project
 
 function OrderDetails() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true); // State to manage loading
+  const [error, setError] = useState(null); // State to manage errors
 
   useEffect(() => {
-    // Fetch order details from the backend
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/order-details/', {
           withCredentials: true, // Include credentials for authentication
         });
         setOrders(response.data);
-      } catch (error) {
-        console.error('Error fetching order details:', error);
+      } catch (err) {
+        setError('Error fetching order details. Please try again later.');
+        console.error('Error fetching order details:', err);
       } finally {
         setLoading(false); // Set loading to false after fetching
       }
@@ -28,13 +29,17 @@ function OrderDetails() {
     return <div>Loading...</div>; // Show loading state while fetching
   }
 
+  if (error) {
+    return <div>{error}</div>; // Show error message if any error occurs
+  }
+
   return (
-    <div>
+    <div className="order-details-container">
       <h1>Order Details</h1>
       {orders.length === 0 ? (
         <p>No orders found.</p> // Message if no orders exist
       ) : (
-        <table>
+        <table className="order-table">
           <thead>
             <tr>
               <th>Order ID</th>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 function HomeScreen() {
   const [games, setGames] = useState([]);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(true);  // Added state for popup
 
   useEffect(() => {
     async function fetchGames() {
@@ -37,6 +38,52 @@ function HomeScreen() {
         boxShadow: 'inset 0 0 50px rgba(0, 0, 0, 0.5)',
       }}
     >
+      {/* First Purchase Promo Popup */}
+      {showPopup && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'linear-gradient(135deg, #444, #8000c0)',
+            color: 'white',
+            padding: '40px',
+            borderRadius: '20px',
+            boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.4)',
+            zIndex: 1000,
+            textAlign: 'center',
+            width: '400px',
+          }}
+        >
+          <h2 style={{ fontSize: '26px', fontWeight: 'bold', marginBottom: '10px' }}>
+            🔥First Purchase Promo🔥
+          </h2>
+          <p style={{ fontSize: '18px', fontWeight: '500' }}>
+            Enjoy <strong>exclusive discounts</strong> on your first purchase! Don't miss out!
+          </p>
+          <button
+            onClick={() => setShowPopup(false)}
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '15px',
+              background: 'red',
+              color: 'white',
+              border: 'none',
+              borderRadius: '50%',
+              width: '30px',
+              height: '30px',
+              cursor: 'pointer',
+              fontSize: '18px',
+              fontWeight: 'bold',
+            }}
+          >
+            ✖
+          </button>
+        </div>
+      )}
+
       <Container>
         <div
           style={{

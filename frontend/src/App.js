@@ -13,6 +13,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsAndConditions from './components/TermsAndConditions';
 import AboutUs from './components/AboutUs';
 import { checkSuperuser } from './utils/Auth';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 function App() {
   const [games, setGames] = useState([]);
@@ -44,46 +45,54 @@ function App() {
     return <div>Loading...</div>;
   }
 
+  // PayPal script options
+  const paypalOptions = {
+    "client-id": "your-client-id-here",  // Replace with your actual PayPal client ID
+    currency: "USD",  // Change currency if needed
+  };
+
   return (
-    <Router>
-      {/* Header Component */}
-      <Header isSuperuser={isSuperuser} />
+    <PayPalScriptProvider options={paypalOptions}>
+      <Router>
+        {/* Header Component */}
+        <Header isSuperuser={isSuperuser} />
 
-      {/* Main Content */}
-      <main style={{ padding: '20px' }}>
-        <Routes>
-          {/* Home Screen */}
-          <Route path="/" element={<HomeScreen games={games} />} />
+        {/* Main Content */}
+        <main style={{ padding: '20px' }}>
+          <Routes>
+            {/* Home Screen */}
+            <Route path="/" element={<HomeScreen games={games} />} />
 
-          {/* Admin Dashboard (only accessible to superusers) */}
-          <Route path="/admin" element={<AdminDashboard />} />
+            {/* Admin Dashboard (only accessible to superusers) */}
+            <Route path="/admin" element={<AdminDashboard />} />
 
-          {/* Order Screen */}
-          <Route path="/order-screen" element={<OrderScreen />} />
+            {/* Order Screen */}
+            <Route path="/order-screen" element={<OrderScreen />} />
 
-          {/* Order Details Screen */}
-          <Route path="/order-details" element={<OrderDetails />} />
+            {/* Order Details Screen */}
+            <Route path="/order-details" element={<OrderDetails />} />
 
-          {/* Rate Games Screen */}
-          <Route path="/rate-games" element={<RateGames />} />
+            {/* Rate Games Screen */}
+            <Route path="/rate-games" element={<RateGames />} />
 
-          {/* Contact Us Page */}
-          <Route path="/contact-us" element={<ContactUs />} />
+            {/* Contact Us Page */}
+            <Route path="/contact-us" element={<ContactUs />} />
 
-          {/* Privacy Policy Page */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            {/* Privacy Policy Page */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-          {/* Terms & Conditions Page */}
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            {/* Terms & Conditions Page */}
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
 
-          {/* About Us Page */}
-          <Route path="/about-us" element={<AboutUs />} />
-        </Routes>
-      </main>
+            {/* About Us Page */}
+            <Route path="/about-us" element={<AboutUs />} />
+          </Routes>
+        </main>
 
-      {/* Footer Component */}
-      <Footer />
-    </Router>
+        {/* Footer Component */}
+        <Footer />
+      </Router>
+    </PayPalScriptProvider>
   );
 }
 

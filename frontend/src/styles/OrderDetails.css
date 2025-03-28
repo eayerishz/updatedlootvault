@@ -1,29 +1,91 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-  }
-  
-  th, td {
-    border: 1px solid white; /* Border for each cell */
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: black; /* Background color for header */
-    position: relative; /* Positioning for the divider */
-  }
-  
-  th:not(:last-child):after {
-    content: "|"; /* Divider between titles */
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 8px; /* Space between title and divider */
-  }
-  
-  tr:hover {
-    background-color: gray; /* Highlight row on hover */
-  }
+.order-details-container {
+  width: 60%; /* Adjust width for desktop view */
+  margin: 40px auto; /* More spacing for desktop */
+  background-color: white;
+  border-radius: 12px;
+  padding: 40px; /* Increase padding for desktop */
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow for desktop */
+  font-family: 'Arial', sans-serif;
+}
+
+.order-title {
+  background-color: #5c1e99; /* Purple header */
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 30px;
+  font-size: 28px; /* Larger font size for desktop */
+}
+
+.order-description {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: #666;
+}
+
+.order-card {
+  margin: 30px 0; /* Increase margin for desktop */
+}
+
+.order-info {
+  margin-bottom: 30px; /* More spacing for desktop */
+}
+
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0; /* Increase padding for desktop */
+}
+
+.label {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px; /* Increase font size for labels */
+}
+
+.value {
+  color: #444;
+  font-size: 18px; /* Increase font size for values */
+}
+
+.total-payment .value {
+  color: #e53935; /* Red color for the total payment */
+  font-size: 28px; /* Larger font size for total payment */
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  margin: 30px 0;
+}
+
+.order-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.cancel-btn, .confirm-btn {
+  width: 180px; /* Larger buttons for desktop */
+  padding: 15px;
+  border-radius: 30px;
+  border: none;
+  font-size: 18px; /* Larger font size for buttons */
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.confirm-btn {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.cancel-btn:hover, .confirm-btn:hover {
+  opacity: 0.9;
+}

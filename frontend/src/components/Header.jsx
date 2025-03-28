@@ -53,6 +53,7 @@ function Header() {
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)',
           }}
         >
+          <img src="/LOGO.png" alt="LootVault Logo" style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
           LootVault
         </Navbar.Brand>
 
@@ -209,28 +210,11 @@ function Header() {
               <i className="fa fa-info-circle" aria-hidden="true" style={{ marginRight: '5px' }}></i>
               About
             </Nav.Link>
-            <Nav.Link 
-              as={Link} // Use Link for routing
-              to="/profile"
-              style={{
-                color: '#FFFFFF',
-                fontWeight: '500',
-                marginRight: '15px',
-                transition: 'color 0.3s ease',
-                textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-              onMouseEnter={(e) => (e.target.style.color = '#FFD700')}
-              onMouseLeave={(e) => (e.target.style.color = '#FFFFFF')}
-            >
-              <i className="fa-sharp-duotone fa-solid fa-circle-user" style={{ marginRight: '5px' }}></i>
-              Profile
-            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
+
 export default Header;

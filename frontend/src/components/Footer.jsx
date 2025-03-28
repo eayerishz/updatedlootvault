@@ -17,6 +17,7 @@ function Footer() {
         <Row>
           <Col className='text-center py-3'>
             <span
+
               style={{
                 fontWeight: 'bold',
                 fontSize: '1.2rem',
