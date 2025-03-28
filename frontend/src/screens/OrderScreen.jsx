@@ -30,14 +30,19 @@ function OrderScreen() {
 
   // Handle quantity changes
   const handleQuantityChange = (gameId, quantity) => {
+    const quantityNum = parseInt(quantity);
+    if (isNaN(quantityNum) || quantityNum < 0) return; // Ensure valid quantity
+
     setOrderItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === gameId);
       if (existingItem) {
+        // Update the quantity if the game is already in the order
         return prevItems.map(item =>
-          item.id === gameId ? { ...item, quantity: parseInt(quantity) } : item
+          item.id === gameId ? { ...item, quantity: quantityNum } : item
         );
       } else {
-        return [...prevItems, { id: gameId, quantity: parseInt(quantity) }];
+        // Add a new game to the order
+        return [...prevItems, { id: gameId, quantity: quantityNum }];
       }
     });
   };
@@ -48,11 +53,16 @@ function OrderScreen() {
     orderItems.forEach(item => {
       const game = games.find(game => game._id === item.id);
       if (game && item.quantity > 0) {
-        total += (typeof game.price === 'number' ? game.price : 0) * item.quantity; // Ensure price is a number
+        total += game.price * item.quantity; // Calculate based on price and quantity
       }
     });
     setTotalPrice(total);
   };
+
+  // Calculate total price when orderItems change
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [orderItems, games]);
 
   // Create order request (Purchase)
   const handlePurchase = async () => {
@@ -74,11 +84,6 @@ function OrderScreen() {
     }
   };
 
-  // Recalculate total price when orderItems change
-  useEffect(() => {
-    calculateTotalPrice();
-  }, [orderItems]);
-
   // Navigate to home when Cancel button is clicked
   const handleCancel = () => {
     navigate('/');
@@ -97,10 +102,7 @@ function OrderScreen() {
               <Card.Body>
                 <Card.Title>{game.name}</Card.Title>
                 <Card.Text>
-                  Price: $
-                  {typeof game.price === 'number' 
-                    ? game.price.toFixed(2) 
-                    : 'N/A'} {/* Fallback if price is not a number */}
+                  Price: ${typeof game.price === 'number' ? game.price.toFixed(2) : 'N/A'} {/* Fallback if price is not a number */}
                 </Card.Text>
 
                 <Form.Group>
